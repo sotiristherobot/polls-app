@@ -1,6 +1,7 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import Header from "../header/Header";
 import QuestionBox from "../questions/QuestionBox";
+import QuestionDetailBox from "../questions/QuestionDetailBox";
 import axios from "axios";
 
 // ui-related
@@ -29,7 +30,8 @@ class Home extends React.Component {
   }
 
   /**
-   * React lifecycle event.
+   * React lifecycle event. Fetches the questions from the api endpoint, creates
+   * QuestionModel instances and sets them to state.
    */
   componentDidMount() {
     this.fetchQuestions()
@@ -47,26 +49,47 @@ class Home extends React.Component {
 
   /**
    * On QuestionBox click handler. Passed down as a prop to <QuestionBox /> to handle clicks
-   * on the question box
+   * on the question box. Finds the question that was clicked based on id and sets
+   * showDetail to true on the state, and the question instance.
+   * @param {event} e
+   * @param {number} qId - The question id is used to find which question was clicked
    */
-  onQuestionBoxClick() {}
+  onQuestionBoxClick(e, qId) {
+    // we know that a question exists with unique id for sure so find it.
+    const selectedQuestion = this.state.questions.find(v => v._id === qId);
 
+    this.setState({
+      selectedQuestion,
+      showDetail: true
+    });
+  }
+
+  //TODO create a HOC for this
   render() {
     return (
-        <Grommet full={true}>
-          <Box direction="row" flex={true}>
-            <Header>Questions</Header>
-          </Box>
-          <Box direction="row" flex={true} fill={true} wrap={true}>
-            {this.state.questions.map(question => (
+      <Grommet full={true}>
+        {!this.state.showDetail ? (
+          <Fragment>
+            <Box direction="row" flex={true}>
+              <Header>Questions</Header>
+            </Box>
+            <Box direction="row" flex={true} fill={true} wrap={true}>
+              {this.state.questions.map(question => (
                 <QuestionBox
-                    key={question.id}
-                    {...question}
-                    onQuestionBoxClick={this.onQuestionBoxClick.bind(this)}
+                  key={question.id}
+                  {...question}
+                  onQuestionBoxClick={this.onQuestionBoxClick.bind(this)}
                 />
-            ))}
-          </Box>
-        </Grommet>
+              ))}
+            </Box>
+          </Fragment>
+        ) : (
+          <QuestionDetailBox
+            key={this.state.selectedQuestion.id}
+            {...this.state.selectedQuestion}
+          />
+        )}
+      </Grommet>
     );
   }
 }
