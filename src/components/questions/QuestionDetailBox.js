@@ -51,9 +51,9 @@ class QuestionDetailBox extends React.Component {
   render() {
     return (
       <Box direction="column" border="all" width="medium" pad="medium">
-        <Text>Question: {this.props._question}</Text>
+        <Text>Question: {this.props.question.question}</Text>
         <Form onSubmit={this.onFormSubmit.bind(this)}>
-          {this.props._choices.map(choice => (
+          {this.props.question.choices.map(choice => (
             <Box key={choice.id} direction="row" pad="medium">
               <RadioButton
                 checked={choice.choice === this.state.selectedRadioButton.name}

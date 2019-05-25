@@ -40,7 +40,12 @@ class Home extends React.Component {
         this.setState({
           questions: data.map(
             item =>
-              new QuestionModel(item.question, item.published_at, item.choices)
+              new QuestionModel(
+                item.url,
+                item.question,
+                item.published_at,
+                item.choices
+              )
           )
         });
       })
@@ -49,15 +54,11 @@ class Home extends React.Component {
 
   /**
    * On QuestionBox click handler. Passed down as a prop to <QuestionBox /> to handle clicks
-   * on the question box. Finds the question that was clicked based on id and sets
-   * showDetail to true on the state, and the question instance.
+   * on the question box. sets showDetail to true on the state, and the question instance.
    * @param {event} e
-   * @param {number} qId - The question id is used to find which question was clicked
+   * @param {QuestionModel} selectedQuestion - The question model of selected question
    */
-  onQuestionBoxClick(e, qId) {
-    // we know that a question exists with unique id for sure so find it.
-    const selectedQuestion = this.state.questions.find(v => v._id === qId);
-
+  onQuestionBoxClick(e, selectedQuestion) {
     this.setState({
       selectedQuestion,
       showDetail: true
@@ -68,7 +69,7 @@ class Home extends React.Component {
    * Passed down as props to <QuestionDetailBox/>. Used to
    * reset state to selectedQuestion null and showDetail to false
    * in order to display <QuestionBox/> again.
-  */
+   */
   resetActiveQuestion() {
     this.setState({
       selectedQuestion: null,
@@ -89,7 +90,7 @@ class Home extends React.Component {
               {this.state.questions.map(question => (
                 <QuestionBox
                   key={question.id}
-                  {...question}
+                  question={question}
                   onQuestionBoxClick={this.onQuestionBoxClick.bind(this)}
                 />
               ))}
@@ -98,7 +99,7 @@ class Home extends React.Component {
         ) : (
           <QuestionDetailBox
             key={this.state.selectedQuestion.id}
-            {...this.state.selectedQuestion}
+            question={this.state.selectedQuestion}
             resetActiveQuestion={this.resetActiveQuestion.bind(this)}
           />
         )}
