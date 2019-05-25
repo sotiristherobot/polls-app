@@ -1,13 +1,14 @@
 import ChoiceModel from "./ChoiceModel";
 
 export default class QuestionModel {
-  constructor(question, publishedAt, choices) {
+  constructor(url, question, publishedAt, choices) {
     this._question = question;
     this._publishedAt = this.convertDate(publishedAt);
     this._choices = choices.map(
-      (choice, index) => new ChoiceModel(index, choice.choice, choice.votes)
+      (choice, index) => new ChoiceModel(index, choice.url, choice.choice, choice.votes)
     );
     this._id = QuestionModel.countInstances;
+    this._url = url;
     QuestionModel.countInstances++;
   }
 
@@ -20,6 +21,9 @@ export default class QuestionModel {
   }
 
   // getters - setters
+  get url() {
+    return this._url;
+  }
   get id() {
     return this._id;
   }
