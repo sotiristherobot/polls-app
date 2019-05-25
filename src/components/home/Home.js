@@ -14,7 +14,9 @@ class Home extends React.Component {
     super(props);
 
     this.state = {
-      questions: []
+      questions: [],
+      selectedQuestion: null,
+      showDetail: false
     };
   }
 
@@ -30,15 +32,17 @@ class Home extends React.Component {
    * React lifecycle event.
    */
   componentDidMount() {
-    this.fetchQuestions().then(response => {
-      const { data } = response;
-      this.setState({
-        questions: data.map(
-          item =>
-            new QuestionModel(item.question, item.published_at, item.choices)
-        )
-      });
-    }).catch(e => console.log(e));
+    this.fetchQuestions()
+      .then(response => {
+        const { data } = response;
+        this.setState({
+          questions: data.map(
+            item =>
+              new QuestionModel(item.question, item.published_at, item.choices)
+          )
+        });
+      })
+      .catch(e => console.log(e));
   }
 
   /**
