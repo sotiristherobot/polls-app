@@ -105,7 +105,6 @@ class Home extends React.Component {
               question={this.state.selectedQuestion}
               resetActiveQuestion={this.resetActiveQuestion.bind(this)}
             />
-            )
           </Fragment>
         )}
       </Grommet>
