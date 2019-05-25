@@ -46,11 +46,11 @@ class QuestionDetailBox extends React.Component {
 
   render() {
     return (
-      <Box direction="column" border="all" width="medium" pad="medium">
+      <Box direction="column" border="all" width="medium" margin="medium" pad="medium">
         <Text>Question: {this.props.question.question}</Text>
         <Form onSubmit={this.onFormSubmit.bind(this)}>
           {this.props.question.choices.map(choice => (
-            <Box key={choice.id} direction="row" pad="medium">
+            <Box key={choice.id} direction="row" pad="medium" justify="between">
               <RadioButton
                 checked={choice.choice === this.state.selectedRadioButton.name}
                 label={choice.choice}
@@ -58,7 +58,7 @@ class QuestionDetailBox extends React.Component {
                 value={choice.url}
                 onChange={this.onRadioButtonChoiceChange.bind(this)}
               />
-              <Text>{choice.votes}</Text>
+              <Text><b>Votes: </b>{choice.votes}</Text>
             </Box>
           ))}
           <Button type="submit" primary label="Submit" />
