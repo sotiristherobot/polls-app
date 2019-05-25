@@ -5,7 +5,7 @@ export default class QuestionModel {
     this._question = question;
     this._publishedAt = this.convertDate(publishedAt);
     this._choices = choices.map(
-      (choice, index) => new ChoiceModel(index, choice.choice, choice.vote)
+      (choice, index) => new ChoiceModel(index, choice.choice, choice.votes)
     );
     this._id = QuestionModel.countInstances;
     QuestionModel.countInstances++;

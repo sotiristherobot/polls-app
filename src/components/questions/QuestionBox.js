@@ -3,7 +3,7 @@ import { Box, Text } from "grommet";
 
 /**
  * Stateless component that creates a QuestionBox for each question, that contain
- * a question, date published and number of choices.
+ * id of question, a question, date published and number of choices.
  * @param props
  */
 export default function QuestionBox(props) {
@@ -14,7 +14,7 @@ export default function QuestionBox(props) {
       width="medium"
       pad="small"
       margin="small"
-      onClick={props.onQuestionBoxClick}
+      onClick={e => props.onQuestionBoxClick(e, props._id)}
     >
       <Text>
         <b>Question:</b> {props._question}
