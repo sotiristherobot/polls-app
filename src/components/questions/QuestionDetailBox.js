@@ -13,7 +13,21 @@ class QuestionDetailBox extends React.Component {
     };
   }
 
-  onRadioButtonChoiceChange(e) {}
+  /**
+   * onChange handler for each radio button. On each change
+   * sets the state with the selectedRadioButton's name and value
+   * @param {event} e
+   */
+  onRadioButtonChoiceChange(e) {
+    this.setState(
+      {
+        selectedRadioButton: {
+          name: e.target.name,
+          value: e.target.value
+        }
+      }
+    );
+  }
 
   onFormSubmit() {}
 
