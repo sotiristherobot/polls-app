@@ -38,10 +38,7 @@ class Home extends React.Component {
       .then(response => {
         const { data } = response;
         this.setState({
-          questions: data.map(
-            item =>
-              new QuestionModel(item.question, item.published_at, item.choices)
-          )
+          questions: QuestionModel.createModelInstances(data)
         });
       })
       .catch(e => console.log(e));
@@ -49,15 +46,11 @@ class Home extends React.Component {
 
   /**
    * On QuestionBox click handler. Passed down as a prop to <QuestionBox /> to handle clicks
-   * on the question box. Finds the question that was clicked based on id and sets
-   * showDetail to true on the state, and the question instance.
+   * on the question box. sets showDetail to true on the state, and the question instance.
    * @param {event} e
-   * @param {number} qId - The question id is used to find which question was clicked
+   * @param {QuestionModel} selectedQuestion - The question model of selected question
    */
-  onQuestionBoxClick(e, qId) {
-    // we know that a question exists with unique id for sure so find it.
-    const selectedQuestion = this.state.questions.find(v => v._id === qId);
-
+  onQuestionBoxClick(e, selectedQuestion) {
     this.setState({
       selectedQuestion,
       showDetail: true
@@ -67,13 +60,20 @@ class Home extends React.Component {
   /**
    * Passed down as props to <QuestionDetailBox/>. Used to
    * reset state to selectedQuestion null and showDetail to false
-   * in order to display <QuestionBox/> again.
-  */
+   * in order to display <QuestionBox/> again. Since in this
+   * function we are sure that the POST request from <QuestionDetailBox/>
+   * was succesfull, calls the fetchQuestions to retrieve the question updates
+   * from backend.
+   */
   resetActiveQuestion() {
-    this.setState({
-      selectedQuestion: null,
-      showDetail: false
-    });
+    this.fetchQuestions().then(response => {
+      const { data } = response;
+      this.setState({
+        selectedQuestion: null,
+        showDetail: false,
+        questions: QuestionModel.createModelInstances(data)
+      });
+    }).catch(e => console.log(e));
   }
 
   //TODO create a HOC for this
@@ -89,18 +89,23 @@ class Home extends React.Component {
               {this.state.questions.map(question => (
                 <QuestionBox
                   key={question.id}
-                  {...question}
+                  question={question}
                   onQuestionBoxClick={this.onQuestionBoxClick.bind(this)}
                 />
               ))}
             </Box>
           </Fragment>
         ) : (
-          <QuestionDetailBox
-            key={this.state.selectedQuestion.id}
-            {...this.state.selectedQuestion}
-            resetActiveQuestion={this.resetActiveQuestion.bind(this)}
-          />
+          <Fragment>
+            <Box direction="row" flex={true}>
+              <Header>Questions Detail</Header>
+            </Box>
+            <QuestionDetailBox
+              key={this.state.selectedQuestion.id}
+              question={this.state.selectedQuestion}
+              resetActiveQuestion={this.resetActiveQuestion.bind(this)}
+            />
+          </Fragment>
         )}
       </Grommet>
     );

@@ -14,16 +14,16 @@ export default function QuestionBox(props) {
       width="medium"
       pad="small"
       margin="small"
-      onClick={e => props.onQuestionBoxClick(e, props._id)}
+      onClick={e => props.onQuestionBoxClick(e, props.question)}
     >
       <Text>
-        <b>Question:</b> {props._question}
+        <b>Question:</b> {props.question.question}
       </Text>
       <Text>
-        <b>Published:</b> {props._publishedAt}
+        <b>Published:</b> {props.question.publishedAt}
       </Text>
       <Text>
-        <b>Choices:</b> {props._choices.length}
+        <b>Choices:</b> {props.question.choices.length}
       </Text>
     </Box>
   );
