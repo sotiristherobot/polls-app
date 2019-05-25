@@ -64,6 +64,18 @@ class Home extends React.Component {
     });
   }
 
+  /**
+   * Passed down as props to <QuestionDetailBox/>. Used to
+   * reset state to selectedQuestion null and showDetail to false
+   * in order to display <QuestionBox/> again.
+  */
+  resetActiveQuestion() {
+    this.setState({
+      selectedQuestion: null,
+      showDetail: false
+    });
+  }
+
   //TODO create a HOC for this
   render() {
     return (
@@ -87,6 +99,7 @@ class Home extends React.Component {
           <QuestionDetailBox
             key={this.state.selectedQuestion.id}
             {...this.state.selectedQuestion}
+            resetActiveQuestion={this.resetActiveQuestion.bind(this)}
           />
         )}
       </Grommet>

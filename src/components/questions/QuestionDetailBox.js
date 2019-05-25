@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Box, Text, RadioButton, Button, Form } from "grommet";
-import axios from 'axios';
+import axios from "axios";
 
 class QuestionDetailBox extends React.Component {
   constructor(props) {
@@ -20,22 +20,32 @@ class QuestionDetailBox extends React.Component {
    * @param {event} e
    */
   onRadioButtonChoiceChange(e) {
-    this.setState(
-      {
-        selectedRadioButton: {
-          name: e.target.name,
-          value: e.target.value
-        }
+    this.setState({
+      selectedRadioButton: {
+        name: e.target.name,
+        value: e.target.value
       }
-    );
+    });
   }
 
   /**
    * onSubmit handler for <Form/>. When form is submitted a
-   * POST request is made to the server.
-  */
+   * POST request is made to the server. On success, it calls
+   * resetActiveQuestion from props to reset state.
+   */
   onFormSubmit() {
-    //TODO implement handler
+    const constructedUrl = `https://polls.apiblueprint.org/questions/${
+      this.props._id
+    }/choices/${this.state.selectedRadioButton.value}`;
+
+    axios
+      .post(constructedUrl)
+      .then(response => {
+        if (response.status === 201) {
+          this.props.resetActiveQuestion();
+        }
+      })
+      .catch(err => console.log(err));
   }
 
   render() {
