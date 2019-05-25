@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import Header from "../header/Header";
+import QuestionBox from "../questions/QuestionBox";
 import axios from "axios";
 
 // ui-related
@@ -40,13 +41,28 @@ class Home extends React.Component {
     }).catch(e => console.log(e));
   }
 
+  /**
+   * On QuestionBox click handler. Passed down as a prop to <QuestionBox /> to handle clicks
+   * on the question box
+   */
+  onQuestionBoxClick() {}
+
   render() {
     return (
-      <Grommet full={true}>
-        <Box direction="column" justify="stretch" flex={true}>
-          <Header>Hello world</Header>
-        </Box>
-      </Grommet>
+        <Grommet full={true}>
+          <Box direction="row" flex={true}>
+            <Header>Questions</Header>
+          </Box>
+          <Box direction="row" flex={true} fill={true} wrap={true}>
+            {this.state.questions.map(question => (
+                <QuestionBox
+                    key={question.id}
+                    {...question}
+                    onQuestionBoxClick={this.onQuestionBoxClick.bind(this)}
+                />
+            ))}
+          </Box>
+        </Grommet>
     );
   }
 }
