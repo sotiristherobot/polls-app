@@ -38,15 +38,7 @@ class Home extends React.Component {
       .then(response => {
         const { data } = response;
         this.setState({
-          questions: data.map(
-            item =>
-              new QuestionModel(
-                item.url,
-                item.question,
-                item.published_at,
-                item.choices
-              )
-          )
+          questions: QuestionModel.createModelInstances(data)
         });
       })
       .catch(e => console.log(e));
@@ -68,13 +60,20 @@ class Home extends React.Component {
   /**
    * Passed down as props to <QuestionDetailBox/>. Used to
    * reset state to selectedQuestion null and showDetail to false
-   * in order to display <QuestionBox/> again.
+   * in order to display <QuestionBox/> again. Since in this
+   * function we are sure that the POST request from <QuestionDetailBox/>
+   * was succesfull, calls the fetchQuestions to retrieve the question updates
+   * from backend.
    */
   resetActiveQuestion() {
-    this.setState({
-      selectedQuestion: null,
-      showDetail: false
-    });
+    this.fetchQuestions().then(response => {
+      const { data } = response;
+      this.setState({
+        selectedQuestion: null,
+        showDetail: false,
+        questions: QuestionModel.createModelInstances(data)
+      });
+    }).catch(e => console.log(e));
   }
 
   //TODO create a HOC for this
