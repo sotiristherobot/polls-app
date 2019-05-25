@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Box, Text, RadioButton, Button, Form } from "grommet";
+import axios from 'axios';
 
 class QuestionDetailBox extends React.Component {
   constructor(props) {
@@ -29,7 +30,13 @@ class QuestionDetailBox extends React.Component {
     );
   }
 
-  onFormSubmit() {}
+  /**
+   * onSubmit handler for <Form/>. When form is submitted a
+   * POST request is made to the server.
+  */
+  onFormSubmit() {
+    //TODO implement handler
+  }
 
   render() {
     return (
