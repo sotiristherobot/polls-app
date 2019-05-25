@@ -97,11 +97,17 @@ class Home extends React.Component {
             </Box>
           </Fragment>
         ) : (
-          <QuestionDetailBox
-            key={this.state.selectedQuestion.id}
-            question={this.state.selectedQuestion}
-            resetActiveQuestion={this.resetActiveQuestion.bind(this)}
-          />
+          <Fragment>
+            <Box direction="row" flex={true}>
+              <Header>Questions Detail</Header>
+            </Box>
+            <QuestionDetailBox
+              key={this.state.selectedQuestion.id}
+              question={this.state.selectedQuestion}
+              resetActiveQuestion={this.resetActiveQuestion.bind(this)}
+            />
+            )
+          </Fragment>
         )}
       </Grommet>
     );
