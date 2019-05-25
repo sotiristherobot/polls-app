@@ -1,8 +1,8 @@
 export default class ChoiceModel {
-  constructor(id, choice, vote) {
+  constructor(id, choice, votes) {
     this._id = id;
     this._choice = choice;
-    this._vote = vote;
+    this._votes = votes;
   }
 
   // getters - setters
@@ -10,9 +10,9 @@ export default class ChoiceModel {
     return this._id;
   }
   get choice() {
-    return this._question;
+    return this._choice;
   }
-  get vote() {
-    return this._vote;
+  get votes() {
+    return this._votes;
   }
 }
