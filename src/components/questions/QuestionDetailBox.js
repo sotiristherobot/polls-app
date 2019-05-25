@@ -8,7 +8,7 @@ class QuestionDetailBox extends React.Component {
 
     this.state = {
       selectedRadioButton: {
-        id: '',
+        url: '',
         name: ''
       }
     };
@@ -34,12 +34,8 @@ class QuestionDetailBox extends React.Component {
    * resetActiveQuestion from props to reset state.
    */
   onFormSubmit() {
-    const constructedUrl = `https://polls.apiblueprint.org/questions/${
-      this.props._id
-    }/choices/${this.state.selectedRadioButton.value}`;
-
     axios
-      .post(constructedUrl)
+      .post(`https://polls.apiblueprint.org${this.state.selectedRadioButton.value}`)
       .then(response => {
         if (response.status === 201) {
           this.props.resetActiveQuestion();
@@ -59,7 +55,7 @@ class QuestionDetailBox extends React.Component {
                 checked={choice.choice === this.state.selectedRadioButton.name}
                 label={choice.choice}
                 name={choice.choice}
-                value={choice.id}
+                value={choice.url}
                 onChange={this.onRadioButtonChoiceChange.bind(this)}
               />
               <Text>{choice.votes}</Text>

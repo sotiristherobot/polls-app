@@ -5,7 +5,7 @@ export default class QuestionModel {
     this._question = question;
     this._publishedAt = this.convertDate(publishedAt);
     this._choices = choices.map(
-      (choice, index) => new ChoiceModel(index, choice.url, choice.choice, choice.votes)
+      (choice, index) => new ChoiceModel(choice.url, index, choice.choice, choice.votes)
     );
     this._id = QuestionModel.countInstances;
     this._url = url;
