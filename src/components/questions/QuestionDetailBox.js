@@ -61,7 +61,13 @@ class QuestionDetailBox extends React.Component {
 
   render() {
     return (
-      <Box direction="column" border="all" width="medium" margin="medium" pad="medium">
+      <Box
+        direction="column"
+        border="all"
+        width="medium"
+        margin="medium"
+        pad="medium"
+      >
         <Text>Question: {this.props.question.question}</Text>
         <Form onSubmit={this.onFormSubmit.bind(this)}>
           {this.props.question.choices.map(choice => (
@@ -73,10 +79,18 @@ class QuestionDetailBox extends React.Component {
                 value={choice.url}
                 onChange={this.onRadioButtonChoiceChange.bind(this)}
               />
-              <Text><b>Votes: </b>{choice.votes}</Text>
+              <Text>
+                <b>Votes: </b>
+                {choice.votes}
+              </Text>
             </Box>
           ))}
-          <Button disabled={this.state.disableSubmitButton} type="submit" primary label="Submit" />
+          <Button
+            disabled={this.state.disableSubmitButton}
+            type="submit"
+            primary
+            label="Submit"
+          />
         </Form>
       </Box>
     );
