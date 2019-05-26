@@ -54,6 +54,9 @@ export default class QuestionModel {
   get choices() {
     return this._choices;
   }
+  set choices(choices) {
+    return this._choices = choices;
+  }
 }
 // static property to count how many instances of this model we have created
 QuestionModel.countInstances = 0;
