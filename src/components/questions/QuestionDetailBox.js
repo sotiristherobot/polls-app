@@ -10,7 +10,8 @@ class QuestionDetailBox extends React.Component {
       selectedRadioButton: {
         url: '',
         name: ''
-      }
+      },
+      disableSubmitButton: true
     };
   }
 
@@ -24,20 +25,34 @@ class QuestionDetailBox extends React.Component {
       selectedRadioButton: {
         name: e.target.name,
         value: e.target.value
-      }
+      },
+      disableSubmitButton: false
     });
   }
 
   /**
    * onSubmit handler for <Form/>. When form is submitted a
-   * POST request is made to the server. On success, it calls
-   * resetActiveQuestion from props to reset state.
+   * POST request is made to the server. On success, updates
+   * the choices with the response from POST request.
    */
   onFormSubmit() {
     axios
-      .post(`https://polls.apiblueprint.org${this.state.selectedRadioButton.value}`)
+      .post(
+        `https://polls.apiblueprint.org${this.state.selectedRadioButton.value}`
+      )
       .then(response => {
         if (response.status === 201) {
+          const { data } = response;
+
+          this.props.question.choices = this.props.question.choices.map(
+            choice => {
+              if (choice.choice === data.choice) {
+                choice.votes = data.votes;
+                return choice;
+              }
+              return choice;
+            }
+          );
           this.props.resetActiveQuestion();
         }
       })
@@ -46,7 +61,13 @@ class QuestionDetailBox extends React.Component {
 
   render() {
     return (
-      <Box direction="column" border="all" width="medium" margin="medium" pad="medium">
+      <Box
+        direction="column"
+        border="all"
+        width="medium"
+        margin="medium"
+        pad="medium"
+      >
         <Text>Question: {this.props.question.question}</Text>
         <Form onSubmit={this.onFormSubmit.bind(this)}>
           {this.props.question.choices.map(choice => (
@@ -58,10 +79,18 @@ class QuestionDetailBox extends React.Component {
                 value={choice.url}
                 onChange={this.onRadioButtonChoiceChange.bind(this)}
               />
-              <Text><b>Votes: </b>{choice.votes}</Text>
+              <Text>
+                <b>Votes: </b>
+                {choice.votes}
+              </Text>
             </Box>
           ))}
-          <Button type="submit" primary label="Submit" />
+          <Button
+            disabled={this.state.disableSubmitButton}
+            type="submit"
+            primary
+            label="Submit"
+          />
         </Form>
       </Box>
     );

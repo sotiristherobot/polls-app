@@ -19,4 +19,7 @@ export default class ChoiceModel {
   get votes() {
     return this._votes;
   }
+  set votes(votes) {
+    this._votes = votes;
+  }
 }
