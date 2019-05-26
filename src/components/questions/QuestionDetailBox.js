@@ -10,7 +10,8 @@ class QuestionDetailBox extends React.Component {
       selectedRadioButton: {
         url: '',
         name: ''
-      }
+      },
+      disableSubmitButton: true
     };
   }
 
@@ -24,7 +25,8 @@ class QuestionDetailBox extends React.Component {
       selectedRadioButton: {
         name: e.target.name,
         value: e.target.value
-      }
+      },
+      disableSubmitButton: false
     });
   }
 
@@ -74,7 +76,7 @@ class QuestionDetailBox extends React.Component {
               <Text><b>Votes: </b>{choice.votes}</Text>
             </Box>
           ))}
-          <Button type="submit" primary label="Submit" />
+          <Button disabled={this.state.disableSubmitButton} type="submit" primary label="Submit" />
         </Form>
       </Box>
     );
