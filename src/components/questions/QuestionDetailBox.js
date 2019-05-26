@@ -30,14 +30,27 @@ class QuestionDetailBox extends React.Component {
 
   /**
    * onSubmit handler for <Form/>. When form is submitted a
-   * POST request is made to the server. On success, it calls
-   * resetActiveQuestion from props to reset state.
+   * POST request is made to the server. On success, updates
+   * the choices with the response from POST request.
    */
   onFormSubmit() {
     axios
-      .post(`https://polls.apiblueprint.org${this.state.selectedRadioButton.value}`)
+      .post(
+        `https://polls.apiblueprint.org${this.state.selectedRadioButton.value}`
+      )
       .then(response => {
         if (response.status === 201) {
+          const { data } = response;
+
+          this.props.question.choices = this.props.question.choices.map(
+            choice => {
+              if (choice.choice === data.choice) {
+                choice.votes = data.votes;
+                return choice;
+              }
+              return choice;
+            }
+          );
           this.props.resetActiveQuestion();
         }
       })
