@@ -16,9 +16,12 @@ available questions to render. The user is able to then, click on each
 of the questions and see the question detail page were he can provide
 his own vote.
 
-### `What I would have done differently`
+### `What I would have done differently in a production ready app`
 1. In my opinion, a project cannot been guaranteed to work 100% unless
 tested. This though was out of scope for this assignment. Given the chance, and more time my first option
 would have been to integrate enzyme and write some test scenarios.
 2. <QuestionBox/> primarily and <QuestionDetailBox/> could have been wrapped in a higher order component (HOC) to track when the question list is empty and display a message to a user. Users should be informed and never left in the dark.
 3. Routing. When user clicks on question the url should have been changed to this form url/id_of_question, with all the benefits that this has. Again this was not ipmlemented because it was out of scope for this assignment.
+4. Remember state on refresh. If the user refreshes the state he should be able to continue from where he was left.
+5. Right now, backend is blindly trusted that always returns the correct results that was asked for. In a production app though there might be some cases
+where information is missing. We need to always check for that information.
