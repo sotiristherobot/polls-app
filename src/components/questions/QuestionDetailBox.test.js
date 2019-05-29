@@ -51,9 +51,11 @@ describe("<QuestionDetailBox/>", () => {
   });
 
   it("should render a <Text/> with the Question: question.question", () => {
-    const inputField = shallowWrapper.children('Text').render();
+    const inputField = shallowWrapper.children("Text").render();
 
-    expect(inputField.text()).toBe("Question: Favourite programming rocketman?");
+    expect(inputField.text()).toBe(
+      "Question: Favourite programming rocketman?"
+    );
   });
 
   it("should render a <Form/>", () => {
@@ -64,22 +66,22 @@ describe("<QuestionDetailBox/>", () => {
 
   it("should render a <Form/> with an <RadioButton/>[3] <Text/> and <Button/> ", () => {
     const form = shallowWrapper.children("Form").render(),
-        radioButtons = form.find('input'),
-        label = form.find('label'),
-        submitButton = form.find('button[type="submit"]');
+      radioButtons = form.find("input"),
+      label = form.find("label"),
+      submitButton = form.find('button[type="submit"]');
 
     expect(radioButtons).toHaveLength(3);
     expect(submitButton).toHaveLength(1);
     expect(label).toHaveLength(3);
-    expect(label.first().text()).toBe('Objective-C');
-    expect(label.last().text()).toBe('Ruby');
+    expect(label.first().text()).toBe("Objective-C");
+    expect(label.last().text()).toBe("Ruby");
   });
 
-    it("<Form/> should render a <Button/> with text = Submit and be initially disabled", () => {
-        const form = shallowWrapper.children("Form").render(),
-            button = form.find('button[type="submit"]');
+  it("<Form/> should render a <Button/> with text = Submit and be initially disabled", () => {
+    const form = shallowWrapper.children("Form").render(),
+      button = form.find('button[type="submit"]');
 
-        expect(button.text()).toBe('Submit');
-        expect(button.prop('disabled')).toBe(true);
-    });
+    expect(button.text()).toBe("Submit");
+    expect(button.prop("disabled")).toBe(true);
+  });
 });
