@@ -74,4 +74,12 @@ describe("<QuestionDetailBox/>", () => {
     expect(label.first().text()).toBe('Objective-C');
     expect(label.last().text()).toBe('Ruby');
   });
+
+    it("<Form/> should render a <Button/> with text = Submit and be initially disabled", () => {
+        const form = shallowWrapper.children("Form").render(),
+            button = form.find('button[type="submit"]');
+
+        expect(button.text()).toBe('Submit');
+        expect(button.prop('disabled')).toBe(true);
+    });
 });
