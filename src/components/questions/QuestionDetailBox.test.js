@@ -50,4 +50,10 @@ describe("<QuestionDetailBox/>", () => {
     expect(shallowWrapper).toHaveLength(1);
   });
 
+  it("should render a <Text/> with the Question: question.question", () => {
+    const inputField = shallowWrapper.children('Text').render();
+
+    expect(inputField.text()).toBe("Question: Favourite programming rocketman?");
+  });
+
 });
