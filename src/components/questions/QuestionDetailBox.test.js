@@ -87,34 +87,36 @@ describe("<QuestionDetailBox/>", () => {
   });
 
   it("<Button/> should call onFormSubmit method onClick", () => {
-    const {props, actions } = mockedProps(),
-        fullMount = mount(
-            <QuestionDetailBox
-                question={props.question[0]}
-                resetActiveQuestion={actions.resetActiveQuestion}
-            />
-        ),
-        button = fullMount.find('button[type="submit"]');
+    const { props, actions } = mockedProps(),
+      fullMount = mount(
+        <QuestionDetailBox
+          question={props.question[0]}
+          resetActiveQuestion={actions.resetActiveQuestion}
+        />
+      ),
+      button = fullMount.find('button[type="submit"]');
 
     expect(actions.onFormSubmit.mock.calls.length).toBe(0);
-    button.simulate('submit');
+    button.simulate("submit");
     expect(actions.onFormSubmit.mock.calls.length).toBe(1);
   });
   it("should have <Button/> initially disabled and enabled on choice", () => {
-    const {props, actions } = mockedProps(),
-        fullMount = mount(
-            <QuestionDetailBox
-                question={props.question[0]}
-                resetActiveQuestion={actions.resetActiveQuestion}
-            />
-        ),
-        button = fullMount.find('button[type="submit"]'),
-        radioButton = fullMount.find('input[value="/questions/12331/choices/50702"]');
+    const { props, actions } = mockedProps(),
+      fullMount = mount(
+        <QuestionDetailBox
+          question={props.question[0]}
+          resetActiveQuestion={actions.resetActiveQuestion}
+        />
+      ),
+      button = fullMount.find('button[type="submit"]'),
+      radioButton = fullMount.find(
+        'input[value="/questions/12331/choices/50702"]'
+      );
 
-        expect(button.instance().disabled).toBe(true);
-        expect(fullMount.state().disableSubmitButton).toBe(true);
-        radioButton.simulate('change');
-        expect(button.instance().disabled).toBe(false);
-        expect(fullMount.state().disableSubmitButton).toBe(false);
+    expect(button.instance().disabled).toBe(true);
+    expect(fullMount.state().disableSubmitButton).toBe(true);
+    radioButton.simulate("change");
+    expect(button.instance().disabled).toBe(false);
+    expect(fullMount.state().disableSubmitButton).toBe(false);
   });
 });
